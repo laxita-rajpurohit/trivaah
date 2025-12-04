@@ -11,8 +11,7 @@ const Bar = styled.nav`
   position: relative;
   align-items: center;
   padding: 10px 0;
-  margin-bottom: 20px;
-  margin-bottom: 0;
+  margin-bottom: 25px;
 
   /* Remove solid borders */
   border: none;
