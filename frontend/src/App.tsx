@@ -4,6 +4,7 @@ import HeaderAnnouncement from './component/HeaderAnnouncement';
 import { Navbar} from './component/Navbar';
 import CategoriesBar from './component/CategoriesBar';
 import { HeroSlider, type HeroSlide } from './component/HeroSlider';
+import { CategoryStrip } from './component/CategoryStrip';
 
 
 
@@ -80,6 +81,20 @@ function App() {
 
     {/* hero occupies full width under the menu */}
     <HeroSlider slides={slides} autoplayMs={5000} />
+    <CategoryStrip
+  items={[
+    { id: "coord", label: "Co-ord Sets", imageSrc: "/images/coord.jpg" },
+    { id: "dresses", label: "Dresses", imageSrc: "/images/dresses.jpg" },
+    { id: "jumpsuits", label: "Jumpsuits", imageSrc: "/images/jumpsuits.jpg" },
+    { id: "suit-sets", label: "Suit Sets", imageSrc: "/images/suit-sets.jpg" },
+    { id: "bottoms", label: "Bottoms", imageSrc: "/images/bottoms.jpg" },
+    { id: "shirts", label: "Shirts", imageSrc: "/images/shirts.jpg" },
+    { id: "sarees", label: "Sarees", imageSrc: "/images/sarees.jpg" },
+    { id: "kaftans", label: "Kaftans", imageSrc: "/images/kaftans.jpg" },
+  ]}
+  onSelect={id => console.log(id)}
+/>
+
   </div>
   );
 }
