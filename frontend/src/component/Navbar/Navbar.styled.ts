@@ -2,8 +2,15 @@
 import styled from "styled-components";
 
 export const NavWrapper = styled.nav`
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
   // width: 100%;
-  padding: 14px 30px;
+  max-width: 100vw;        /* never wider than viewport */
+  overflow-x: hidden;
+
+  padding: 15px 30px 5px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -12,8 +19,10 @@ export const NavWrapper = styled.nav`
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 14px;
+    padding: 10px 16px;
   }
 `;
+
 
 export const LeftMenu = styled.div`
     flex: 1;
