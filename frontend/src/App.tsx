@@ -57,6 +57,16 @@ function App() {
       ctaLabel: "SHOP NOW",
       ctaLink: "#",
     },
+    {
+      id: "hero-3",
+      desktopImage: "/hero/hero3.jpeg",
+      mobileImage: "/hero/hero3.jpeg",
+      title: "Test hero",
+      subtitle: "SALWAR SUITS\nUNDER ₹2499",
+      badgeText: "",
+      ctaLabel: "SHOP NOW",
+      ctaLink: "#",
+    }
   ];
   
   

@@ -2,34 +2,31 @@
 import styled from "styled-components";
 
 
-export const SliderWrapper = styled.div`
-  .swiper {
-    width: 100%;
-  }
-
-  .swiper-slide {
-    height: auto;
-  }
-
-  .swiper-pagination-bullets {
-    bottom: 24px;
-  }
-
-  .swiper-pagination-bullet {
-    background: #ffffff;
-    opacity: 0.4;
-  }
-
-  .swiper-pagination-bullet-active {
-    opacity: 1;
-  }
-`;
-
-
 export const HeroSection = styled.section`
   position: relative;
   width: 100%;
+  max-width: 100vw;
   overflow: hidden;
+`;
+
+export const SliderWrapper = styled.div`
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
+
+  .swiper {
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  .swiper-wrapper {
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  .swiper-slide {
+    width: 100% !important;
+  }
 `;
 
 export const SlideWrapper = styled.article`
@@ -38,9 +35,10 @@ export const SlideWrapper = styled.article`
 `;
 
 export const SlideImage = styled.img`
-  width: 100%;
-  height: auto;        // keep this
   display: block;
+  width: 100%;
+  max-width: 100vw;
+  height: auto;
   object-fit: cover;
 `;
 
