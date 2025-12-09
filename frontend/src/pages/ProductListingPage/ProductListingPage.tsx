@@ -5,10 +5,7 @@ import { Navbar } from "../../component/Navbar";
 import CategoriesBar from "../../component/CategoriesBar/CategoriesBar";
 import { Footer } from "../../component/Footer";
 import TivaahFaviconLogo from "../../assets/TV logo Footer Transparent.png";
-import {
-  footerColumns,
-  socialLinks,
-} from "../../data/homePageData";
+import { footerColumns, socialLinks } from "../../data/homePageData";
 import { slugToCategory } from "../../utils/routing";
 import {
   PageContainer,
@@ -18,13 +15,6 @@ import {
   FilterButtonsContainer,
   FilterButton,
   ContentWrapper,
-  Sidebar,
-  SidebarTitle,
-  FilterSection,
-  FilterLabel,
-  PriceRangeContainer,
-  PriceInput,
-  GoButton,
   MainContent,
   ResultsHeader,
   ResultsCount,
@@ -38,7 +28,14 @@ import {
   ProductName,
   ProductPrice,
   StyledLink,
+  SidebarTitle,
+  FilterSection,
+  FilterLabel,
+  PriceRangeContainer,
+  PriceInput,
+  GoButton,
 } from "./ProductListingPage.styled";
+import { FilterDrawer, FilterTrigger } from "../../component/FilterDrawer/FilterDrawer";
 
 interface Product {
   id: number;
@@ -49,7 +46,7 @@ interface Product {
   tagType?: "discount" | "bestseller" | "offer";
 }
 
-// Mock product data - replace with API call
+// mock data
 const mockProducts: Product[] = [
   {
     id: 1,
@@ -101,36 +98,45 @@ const mockProducts: Product[] = [
   },
 ];
 
+const filterButtons = [
+  "SAREE",
+  "ART SILK SAREES",
+  "PASTEL SAREES",
+  "SAREES UNDER 5000",
+  "DIWALI SAREES",
+];
+
 export const ProductListingPage = () => {
   const { categorySlug } = useParams<{ categorySlug: string }>();
   const [products, setProducts] = useState<Product[]>(mockProducts);
   const [minPrice, setMinPrice] = useState(2392);
   const [maxPrice, setMaxPrice] = useState(7592);
   const [sortBy, setSortBy] = useState("relevance");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const categoryName = categorySlug ? slugToCategory(categorySlug) : "Products";
-  
-  // Filter buttons data
-  const filterButtons = [
-    "SAREE",
-    "ART SILK SAREES",
-    "PASTEL SAREES",
-    "SAREES UNDER 5000",
-    "DIWALI SAREES",
-  ];
 
   useEffect(() => {
-    // Here you would fetch products based on categorySlug
-    // For now, using mock data
+    // later: fetch products by categorySlug
     setProducts(mockProducts);
   }, [categorySlug]);
 
-  const handlePriceFilter = () => {
-    // Filter products by price range
+  const applyPriceFilter = () => {
     const filtered = mockProducts.filter(
       (p) => p.price >= minPrice && p.price <= maxPrice
     );
     setProducts(filtered);
+  };
+
+  const handleApplyFilters = () => {
+    applyPriceFilter();
+    setIsFilterOpen(false);
+  };
+
+  const handleClearFilters = () => {
+    setMinPrice(2392);
+    setMaxPrice(7592);
+    setProducts(mockProducts);
   };
 
   return (
@@ -142,10 +148,11 @@ export const ProductListingPage = () => {
       <PageHeader>
         <PageTitle>{categoryName}</PageTitle>
         <PageDescription>
-          The floral saree is a must-have in every Indian woman's ethnic wardrobe. 
-          Trivaah's collection features {categoryName.toLowerCase()} from traditional 
-          floral motifs to modern designs. Buying a {categoryName.toLowerCase()} online 
-          is easy when you shop at Trivaah... <StyledLink href="#">Read More</StyledLink>
+          The floral saree is a must-have in every Indian woman's ethnic
+          wardrobe. Trivaah's collection features{" "}
+          {categoryName.toLowerCase()} from traditional floral motifs to modern
+          designs. Buying a {categoryName.toLowerCase()} online is easy when you
+          shop at Trivaah... <StyledLink href="#">Read More</StyledLink>
         </PageDescription>
       </PageHeader>
 
@@ -155,36 +162,48 @@ export const ProductListingPage = () => {
         ))}
       </FilterButtonsContainer>
 
+      {/* Bonkers-style trigger bar */}
+      <FilterTrigger onOpen={() => setIsFilterOpen(true)} />
+
+      {/* Slide-in filter drawer */}
+      <FilterDrawer
+        isOpen={isFilterOpen}
+        totalProducts={products.length}
+        onToggle={() => setIsFilterOpen(false)}
+        onApply={handleApplyFilters}
+        onClear={handleClearFilters}
+      >
+        <SidebarTitle>FILTER BY</SidebarTitle>
+
+        <FilterSection>
+          <FilterLabel>PRICE</FilterLabel>
+          <PriceRangeContainer>
+            <PriceInput
+              type="number"
+              value={minPrice}
+              onChange={(e) => setMinPrice(Number(e.target.value))}
+              placeholder="Min"
+            />
+            <span>to</span>
+            <PriceInput
+              type="number"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(Number(e.target.value))}
+              placeholder="Max"
+            />
+            <GoButton type="button" onClick={applyPriceFilter}>
+              GO
+            </GoButton>
+          </PriceRangeContainer>
+        </FilterSection>
+
+        <FilterSection>
+          <FilterLabel>FABRIC</FilterLabel>
+          {/* TODO: add checkboxes */}
+        </FilterSection>
+      </FilterDrawer>
+
       <ContentWrapper>
-        <Sidebar>
-          <SidebarTitle>FILTER BY</SidebarTitle>
-          
-          <FilterSection>
-            <FilterLabel>PRICE</FilterLabel>
-            <PriceRangeContainer>
-              <PriceInput
-                type="number"
-                value={minPrice}
-                onChange={(e) => setMinPrice(Number(e.target.value))}
-                placeholder="Min"
-              />
-              <span>to</span>
-              <PriceInput
-                type="number"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(Number(e.target.value))}
-                placeholder="Max"
-              />
-              <GoButton onClick={handlePriceFilter}>GO</GoButton>
-            </PriceRangeContainer>
-          </FilterSection>
-
-          <FilterSection>
-            <FilterLabel>FABRIC</FilterLabel>
-            {/* Add fabric filter options here */}
-          </FilterSection>
-        </Sidebar>
-
         <MainContent>
           <ResultsHeader>
             <ResultsCount>{products.length} results</ResultsCount>
@@ -203,14 +222,18 @@ export const ProductListingPage = () => {
             {products.map((product) => (
               <ProductCard key={product.id}>
                 {product.tag && (
-                  <ProductTag tagType={product.tagType}>{product.tag}</ProductTag>
+                  <ProductTag tagType={product.tagType}>
+                    {product.tag}
+                  </ProductTag>
                 )}
                 <ProductImageWrapper>
                   <ProductImage src={product.imageUrl} alt={product.name} />
                 </ProductImageWrapper>
                 <ProductInfo>
                   <ProductName>{product.name}</ProductName>
-                  <ProductPrice>₹{product.price.toLocaleString()}</ProductPrice>
+                  <ProductPrice>
+                    ₹{product.price.toLocaleString()}
+                  </ProductPrice>
                 </ProductInfo>
               </ProductCard>
             ))}
@@ -226,4 +249,3 @@ export const ProductListingPage = () => {
     </PageContainer>
   );
 };
-

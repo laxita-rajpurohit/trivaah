@@ -2,15 +2,13 @@ import styled from "styled-components";
 
 export const PageContainer = styled.div`
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 `;
 
 export const PageHeader = styled.div`
   padding: 40px 80px 20px;
   max-width: 1400px;
   margin: 0 auto;
-  width: 100%;
+  // width: 100%;
 
   @media (max-width: 900px) {
     padding: 20px 20px 15px;
@@ -56,7 +54,7 @@ export const FilterButtonsContainer = styled.div`
   overflow-x: auto;
   max-width: 1400px;
   margin: 0 auto;
-  width: 100%;
+  // width: 100%;
 
   &::-webkit-scrollbar {
     height: 4px;
@@ -99,9 +97,9 @@ export const ContentWrapper = styled.div`
   display: flex;
   gap: 40px;
   padding: 20px 80px 60px;
-  max-width: 1400px;
+  // max-width: 1400px;
   margin: 0 auto;
-  width: 100%;
+  // width: 100%;
 
   @media (max-width: 900px) {
     flex-direction: column;
