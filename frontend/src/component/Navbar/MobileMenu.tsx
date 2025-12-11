@@ -67,7 +67,12 @@ const TopLevelItem = styled.button<{ open?: boolean }>`
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+
+  span {
+    color: black;
+  }
 `;
+
 
 const Chevron = styled.span<{ open?: boolean }>`
   font-size: 16px;
