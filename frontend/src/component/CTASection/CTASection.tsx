@@ -25,9 +25,9 @@ export const HeroCTA: React.FC<HeroCTAProps> = ({
   subtitle,
   offerText,
   codeText,
-  buttonLabel,
+  // buttonLabel,
   align = "left",
-  onClick,
+  // onClick,
 }) => {
   return (
     <HeroCTAWrap $bg={backgroundImage}>
