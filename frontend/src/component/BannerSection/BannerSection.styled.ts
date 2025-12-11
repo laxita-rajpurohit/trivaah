@@ -11,6 +11,7 @@ export const BannerRoot = styled.section`
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
     row-gap: 32px;
+    margin-top: 40px;
   }
 `;
 
