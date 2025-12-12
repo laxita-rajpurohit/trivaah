@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { navCategories, type CategoryItem } from "../../data/navCategories";
 import { CategoryStrip } from "../CategoryStrip";
 import { categoryStripItems } from "../../data/homePageData";
-
+import logo from "../../assets/trivaah-logo.svg";
 type Props = {
   open: boolean;
   onClose: () => void;
@@ -44,8 +44,12 @@ const DrawerHeader = styled.div`
   padding: 0 18px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   border-bottom: 1px solid #f1f1f1;
+  img{
+  margin-left: 42px;
+  margin-top: 8px;
+  }
 `;
 
 const CloseIcon = styled.div`
@@ -136,7 +140,9 @@ const MobileMenu: FC<Props> = ({ open, onClose }) => {
     <>
       <Backdrop open={open} onClick={onClose} />
       <DrawerWrapper open={open}>
+      
         <DrawerHeader>
+        <img src={logo} alt="Trivaah logo" width={118} height={30} />
           <CloseIcon onClick={onClose}>×</CloseIcon>
         </DrawerHeader>
 
